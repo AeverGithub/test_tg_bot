@@ -3,7 +3,7 @@ import random
 import telebot
 from telebot import types
 
-bot = telebot.TeleBot("#ваш_токен")  # создание бота
+bot = telebot.TeleBot("2106223826:AAGYOG2_kDGoxL4spLqkjQQ5JjKreXnU4PE")  # создание бота
 
 
 @bot.message_handler(commands=['start'])  # обработка команды /start
@@ -13,7 +13,54 @@ def start_command(message):
 
 @bot.message_handler(commands=['help'])  # обработка команды /help
 def help_command(message):
-    bot.send_message(message.from_user.id, helptext + "\n\n" + helptext2 + "\n\n" + helptext3 + "\n\n" + helptext4)
+    bot.send_message(message.from_user.id, helptext + "\n\n" + helptext2 + "\n\n" + helptext3 + "\n\n" + helptext4+ "\n\n" + helptext5+ "\n\n" + helptext6 + helptext7 + "\n\n" + helptext8)
+
+@bot.message_handler(commands=['faq'])  # обработка команды /faq
+def faq(message):
+    question1 = "<b>-Когда проводятся вступительные испытания для поступающих на бакалавр/специалитет?</b>"
+    answer1 = "\n-Каждый вторник и четверг в 11:00 начиная с 29 июня."
+    bot.send_message(message.from_user.id, question1 + answer1, parse_mode="html")
+    question2 = "<b>-До какого срока проводятся вступительные испытания для поступающих на бакалавр/специалитет?</b>"
+    answer2 = "\n-Для очной и очно-заочной формы: бюджетные места до 27 июля, а платные до 26 августа." \
+              "\n-Для заочной формы до 31 августа."
+    bot.send_message(message.from_user.id, question2 + answer2, parse_mode="html")
+
+
+    keyboard = types.InlineKeyboardMarkup()
+    button1 = types.InlineKeyboardButton(text="Дополнительная информация о приёмной комиссии", url="https://rut-miit.ru/admissions/office/about")
+    keyboard.add(button1)
+    bot.send_message(message.from_user.id, text="<b>-Ссылки:</b>", parse_mode="html", reply_markup=keyboard)
+
+@bot.message_handler(commands=['hostel'])  # обработка команды /hostel
+def hostel(message):
+    text = "Российский университет транспорта (МИИТ) имеет в своём составе 10 комфортабельных общежитий." \
+           "\nСтудент может получить место в общежитии при условии, что он иногородний или входит в льготные группы." \
+           "\nСтоимость комнат в общежитии меньше стоимости снятия частных комнат, и зависит от заселённости и качества помещения."
+    keyboard = types.InlineKeyboardMarkup()
+    button1 = types.InlineKeyboardButton(text="Дополнительная информация об общежитиях",
+                                         url="https://rut-miit.ru/org/dormitory")
+    keyboard.add(button1)
+    bot.send_message(message.from_user.id, text=text, parse_mode="html", reply_markup=keyboard)
+
+@bot.message_handler(commands=['news'])  # обработка команды /news
+def news(message):
+    keyboard = types.InlineKeyboardMarkup()
+    button1 = types.InlineKeyboardButton(text="Новости университета",
+                                         url="https://rut-miit.ru/news?from=1&to=1&category_id=1383,1384,1703,1683,1743,1543,1158,1523,1803,1805,1147,1282,34,1148,1323,1563,1051,1643,1843,1583,1603,1127,1363")
+    keyboard.add(button1)
+    bot.send_message(message.from_user.id, text="<b>Ссылка на новости:</b>", parse_mode="html", reply_markup=keyboard)
+
+@bot.message_handler(commands=['reviews'])  # обработка команды /reviews
+def reviews(message):
+    keyboard = types.InlineKeyboardMarkup()
+    button1 = types.InlineKeyboardButton(text="otzovik.com",
+                                         url="https://otzovik.com/reviews/rossiyskiy_universitet_transporta_miit_russia_moscow/")
+    button2 = types.InlineKeyboardButton(text="tabiturient.ru",
+                                         url="https://tabiturient.ru/vuzu/miit/")
+    button3 = types.InlineKeyboardButton(text="yandex.ru",
+                                         url="https://yandex.ru/maps/org/rossiyskiy_universitet_transporta/1855876449/reviews/?ll=37.608007%2C55.787839&z=17")
+    keyboard.add(button1, button2, button3)
+    bot.send_message(message.from_user.id, text="<b>Отзывы на сайте:</b>", parse_mode="html", reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['reg'])  # обработка команды /reg
@@ -35,7 +82,7 @@ def documents(message):
 
 @bot.message_handler(commands=['account'])  # обработка команды /account
 def account(message):
-    if name != "" and surname != "" and surname != "" and age != 0:
+    if name != "" and surname != "" and middlename != "" and age != 0:
         bot.send_message(message.from_user.id, surname + " " + name + " " + middlename + ".\n" + str(
             age) + " лет.")
     else:
@@ -77,10 +124,14 @@ def get_text_messages(message):
 
 greetings = "Доброго времени суток, данный бот создан для тестирования функций, но скоро тут будет много интересного, " \
             "используй /help, чтобы узнать, что бот умеет."
-helptext = "Хочешь получить рандомный стикер из выбранной катергории? Используй /sticker"
+helptext = "Хочешь получить рандомный стикер из выбранной категории? Используй /sticker"
 helptext2 = "Хочешь зарегистрироваться? Используй /reg"
 helptext3 = "Уже зарегистрирован? Получи информацию о своем аккаунте командой /account"
 helptext4 = "Хочешь узнать, как подать документы в РУТ(МИИТ)? Используй /documents"
+helptext5 = "Хочешь узнать об условиях предоставления общежития? Используй /hostel"
+helptext6 = "Чтобы узнать ответы на часто задаваемые вопросы используй /faq"
+helptext7 = "Хочешь узнать отзывы об университете? Используй /reviews"
+helptext8 = "Чтобы узнать о новостях университета? Используй /news"
 name = ""
 surname = ""
 middlename = ""
